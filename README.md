@@ -20,7 +20,7 @@ from logger import Logger
 log = Logger(log_location="logs/report.log")
 
 # The following code will create a log with the following message
-# timestamps [log level] - logger.py [Line: line #]: Log message goes here, don't forget to add "hxxp[://]example[.]com to format in a resource
+# timestamps [log level] - logger.py [Line: line #]: Log message goes here, don't forget to add "hxxp[://]example[.]com" to format in a resource
 log.info(
     message="Log message goes here, don't forget to add {} to format in a resource,
     resource="http://example.com
