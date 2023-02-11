@@ -15,14 +15,14 @@ class Logger:
 
     log_location (str)
         Where logs are to be written to
-    log_format
+    log_format (str)
         Format in which events are logged
-    log_level
+    log_level (int)
         Current level of minimum logs being written
         DEBUG, INFO, WARNING, ERROR, CRITICAL
-    log
+    log (logging.Logger)
         logging.Logger object
-    levels
+    levels (list)
         Available log levels
     """
 
