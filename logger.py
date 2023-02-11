@@ -49,8 +49,7 @@ class Logger:
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             try:
-                protocol, host = kwargs['resource'].split("://")
-                defanged = f"{protocol.replace('t', 'x').replace('T', 'x')}://{host}"
+                defanged = kwargs['resource'].replace("http", "hxxp")
                 defanged = defanged.replace("://", "[://]")
                 defanged = defanged.replace(".", "[.]")
                 return func(self, message=kwargs['message'], resource=f"\"{defanged}\"")
