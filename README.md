@@ -3,7 +3,7 @@ Very simple wrapper around the Python logging module to attempt to automatically
 
 ## How does this defang resources?
 - A few items in resource locations are modified
-    - Protocols: `http` => `hxxp`, `ftp` => `fxp`, etc.
+    - Protocols: `http` => `hxxp`
     - Other: `://` => `[://]`, `.` => `[.]`
 
 ## How to use the logging library
