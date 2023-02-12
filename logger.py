@@ -6,6 +6,11 @@ class Logger:
     Class designed to produce logs with automatically defanged resources
     Wrapper around logging class
 
+    Can pass in the following as a resource
+    - NoneType
+    - str
+    - list of str
+
     example)
         log = Logger(log_location="logs/project.log")
         log.info(
@@ -49,10 +54,22 @@ class Logger:
         @functools.wraps(func)
         def wrapper(self, *args, **kwargs):
             try:
-                defanged = kwargs['resource'].replace("http", "hxxp")
-                defanged = defanged.replace("://", "[://]")
-                defanged = defanged.replace(".", "[.]")
-                return func(self, message=kwargs['message'], resource=f"\"{defanged}\"")
+                resource = kwargs['resource']
+                if type(resource) == str:
+                    defanged = resource.replace("http", "hxxp")
+                    defanged = defanged.replace("://", "[://]")
+                    defanged = defanged.replace(".", "[.]")
+                    defanged = f"\"{defanged}\""
+                    return func(self, message=kwargs['message'], resource=defanged)
+                else:
+                    defanged_resources = list() 
+                    for item in resource:
+                        defanged = item.replace("http", "hxxp")
+                        defanged = defanged.replace("://", "[://]")
+                        defanged = defanged.replace(".", "[.]")
+                        defanged = f"\"{defanged}\""
+                        defanged_resources.append(defanged)
+                    return func(self, message=kwargs['message'], resource=defanged_resources)
             except:
                 return func(self, message=kwargs['message'], resource=None)
         return wrapper
@@ -60,27 +77,45 @@ class Logger:
     @defang
     def debug(self, message: str, resource=None):
         """Logging for debugging: Non-production"""
-        self.log.debug(message.format(resource))
+        if type(resource) == list:
+            self.log.debug(message.format(*resource))
+        else:
+            self.log.debug(message.format(*resource))
 
     @defang
     def info(self, message: str, resource=None):
         """Logging informational information"""
-        self.log.info(message.format(resource))
+        if type(resource) == list:
+            self.log.info(message.format(*resource))
+        else:
+            self.log.info(message.format(resource))
+
 
     @defang
     def warning(self, message: str, resource=None):
         """Logging warnings"""
-        self.log.warning(message.format(resource))
+        if type(resource) == list:
+            self.log.warning(message.format(*resource))
+        else:
+            self.log.warning(message.format(resource))
+
 
     @defang
     def error(self, message: str, resource=None):
         """Logging error events"""
-        self.log.error(message.format(resource))
+        if type(resource) == list:
+            self.log.error(message.format(*resource))
+        else:
+            self.log.error(message.format(resource))
 
     @defang
     def critical(self, message: str, resource=None):
         """Logging critical events"""
-        self.log.critical(message.format(resource))
+        if type(resource) == list:
+            self.log.critical(message.format(*resource))
+        else:
+            self.log.critical(message.format(resource))
+
 
     def lower_log_level(self):
         """Lower logging level"""

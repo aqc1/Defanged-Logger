@@ -11,6 +11,7 @@ Very simple wrapper around the Python logging module to attempt to automatically
 - Pass in a file location by default
 - Default logging level is equivalent to `logging.INFO`
 - Log levels are identical to those in the traditional logging library
+- `resource` can be any of the following types: NoneType, str, list
 - Example usage below:
 
 ```
