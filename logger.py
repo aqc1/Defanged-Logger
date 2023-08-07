@@ -80,7 +80,7 @@ class Logger:
         if type(resource) == list:
             self.log.debug(message.format(*resource))
         else:
-            self.log.debug(message.format(*resource))
+            self.log.debug(message.format(resource))
 
     @defang
     def info(self, message: str, resource=None):
